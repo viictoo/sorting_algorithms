@@ -19,7 +19,7 @@ int partition(int arr[], int lo, int hi, size_t size)
 	int i = lo - 1, j = hi + 1;
 	int tmp;
 
-	while (i < j)
+	while (true)
 	{
 		/**Find leftmost element greater than or equal to pivot */
 		do {
