@@ -74,7 +74,7 @@ void hoare_scheme(int arr[], int lo, int hi, size_t size)
  */
 void quick_sort_hoare(int *array, size_t size)
 {
-	if (array == NULL || size < 2)
+	if (size < 2)
 		return;
 	hoare_scheme(array, 0, size - 1, size);
 }
