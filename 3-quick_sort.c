@@ -72,7 +72,7 @@ void recursive_sort(int arr[], int low, int high, size_t size)
 	if (low < high)
 	{
 		/* pi is partitioning index, arr[p]is now at right place */
-		pi = partition(arr, low, high, size);
+		pi = lomuto_scheme(arr, low, high, size);
 		/* Separately sort elements before partition and after partition */
 		recursive_sort(arr, low, pi - 1, size);
 		recursive_sort(arr, pi + 1, high, size);
