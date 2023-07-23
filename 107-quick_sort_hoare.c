@@ -15,11 +15,11 @@
  **/
 int partition(int arr[], int lo, int hi, size_t size)
 {
-	int pivot = arr[lo];
+	int pivot = arr[hi];
 	int i = lo - 1, j = hi + 1;
 	int tmp;
 
-	while (true)
+	while (i < j)
 	{
 		/**Find leftmost element greater than or equal to pivot */
 		do {
@@ -32,15 +32,16 @@ int partition(int arr[], int lo, int hi, size_t size)
 		} while (arr[j] > pivot);
 
 		/* If two pointers met. */
-		if (i >= j)
-			return (j);
-
-		/* swap(arr[i], arr[j]); */
-		tmp = arr[i];
-		arr[i] = arr[j];
-		arr[j] = tmp;
-		print_array(arr, size);
+		if (i < j)
+		{
+			/* swap(arr[i], arr[j]); */
+			tmp = arr[i];
+			arr[i] = arr[j];
+			arr[j] = tmp;
+			print_array(arr, size);
+		}
 	}
+	return (i);
 }
 
 /**
@@ -55,15 +56,15 @@ void hoare_scheme(int arr[], int lo, int hi, size_t size)
 {
 	int pi;
 
-	if (lo < hi)
+	if (hi > lo)
 	{
 		/*
 		 * pi is partitioning index, arr[p] is now at right place
 		 */
 		pi = partition(arr, lo, hi, size);
 
-		hoare_scheme(arr, lo, pi, size);
-		hoare_scheme(arr, pi + 1, hi, size);
+		hoare_scheme(arr, lo, pi - 1, size);
+		hoare_scheme(arr, pi, hi, size);
 	}
 }
 /**
@@ -73,7 +74,7 @@ void hoare_scheme(int arr[], int lo, int hi, size_t size)
  */
 void quick_sort_hoare(int *array, size_t size)
 {
-	if (size < 2)
+	if (array == NULL || size < 2)
 		return;
-	hoare_scheme(array, 0, (int)size - 1, size);
+	hoare_scheme(array, 0, size - 1, size);
 }
