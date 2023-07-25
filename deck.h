@@ -7,10 +7,9 @@
 #include <unistd.h>
 
 /**
- * struct values_s - Structure representing card values
- *
- * @name: Name of the card value (e.g., "Ace", "Jack", "Queen", "King")
- * @val: Numeric value of the card (e.g., 1 for "Ace", 11 for "Jack", etc.)
+ * struct special_values - Structure representing card values
+ * @name: name of the special card("Ace", "Jack", "Queen", "King")
+ * @value: value to assign to the card
  */
 typedef struct special_values
 {
@@ -18,6 +17,13 @@ typedef struct special_values
 	int value;
 } spec_values;
 
+/**
+ * enum kind_e - Assigns values to the card suites
+ * @SPADE: = 0,
+ * @HEART: = 1,
+ * @CLUB: = 2,
+ * @DIAMOND: = 3
+ */
 typedef enum kind_e
 {
 	SPADE = 0,
@@ -56,7 +62,6 @@ typedef struct deck_node_s
 void print_deck(const deck_node_t *deck);
 deck_node_t *init_deck(const card_t cards[52]);
 void sort_deck(deck_node_t **deck);
-
-
-
+int get_card_value(const card_t *card);
+void swap_nodes(deck_node_t **deck, deck_node_t *n1, deck_node_t *n2);
 #endif
