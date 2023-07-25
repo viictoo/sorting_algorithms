@@ -61,7 +61,7 @@ void heap_sort(int *array, size_t size)
 		return;
 
 	/* Build the max heap by repeatedly calling sift_down_recursive on subtrees.*/
-	for (i = (size / 2) - 1; i > 0; i--)
+	for (i = (size / 2); i > 0; i--)
 		sift_down_recursive(array, size, size, i - 1);
 
 	/**
