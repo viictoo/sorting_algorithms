@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include <unistd.h>
 
 /**
@@ -33,5 +34,10 @@ void cocktail_sort_list(listint_t **list);
 void merge_sort(int *array, size_t size);
 void heap_sort(int *array, size_t size);
 void radix_sort(int *array, size_t size);
+
 void bitonic_sort(int *array, size_t size);
+void bit_merge(int *array, size_t size, bool up_down);
+void bit_sort_recursive(int *array, size_t size,
+size_t input_size, bool up_down);
+
 #endif
