@@ -1,16 +1,16 @@
 #include "sort.h"
 /**
- * prints - prints left, right, and merged halves
- * @arr: original or tmp array
- * @side: left, right, or merged half
- * @start: starting index
- * @end: ending index
+ * output - format printed output
+ * @arr: input array
+ * @name: name of side getting printed
+ * @start: start index
+ * @end: end index
  */
-void prints(int *arr, char *side, size_t start, size_t end)
+void output(int *arr, char *name, size_t start, size_t end)
 {
 	size_t i;
 
-	printf("[%s]: ", side);
+	printf("[%s]: ", name);
 	for (i = start; i < end; i++)
 	{
 		if (i != (end - 1))
@@ -21,59 +21,64 @@ void prints(int *arr, char *side, size_t start, size_t end)
 
 }
 /**
- * rec_merge - recursively splits and merges halves
- * @array: original array
- * @sortArr: tmp array to hold sorted elements
- * @l: starting index
- * @r: ending index
+ * merge_recursive - split and merge sorted halffs recursively
+ * @array: input array
+ * @arr_copy: array copy
+ * @left: leftmost index
+ * @right: rightmost index
  */
-void rec_merge(int *array, int *sortArr, size_t l, size_t r)
+void merge_recursive(int *array, int *arr_copy, size_t left, size_t right)
 {
-	size_t i, l_half, r_half;
-	size_t mid = (l + r) / 2;
+	size_t i;
+	size_t left_h, right_h, mid = (left + right) / 2;
 
-	if (r - l <= 1)
+	if ((right - 1) == left)
 		return;
 
-	rec_merge(array, sortArr, l, mid);
-	rec_merge(array, sortArr, mid, r);
+	merge_recursive(array, arr_copy, left, mid);
+	merge_recursive(array, arr_copy, mid, right);
 	printf("Merging...\n");
-	prints(array, "left", l, mid);
-	prints(array, "right", mid, r);
-	l_half = l;
-	r_half = mid;
-	for (i = l; i < r; i++)
+	output(array, "left", left, mid);
+	output(array, "right", mid, right);
+
+	left_h = left;
+	right_h = mid;
+	for (i = left; i < right; i++)
 	{
-		if ((l_half < mid) &&
-		    ((r_half == r) || (array[l_half] < array[r_half])))
+		if ((left_h < mid) && ((right_h == right)
+					|| (array[left_h] < array[right_h])))
 		{
-			sortArr[i] = array[l_half];
-			l_half++;
+			arr_copy[i] = array[left_h];
+			left_h++;
 		}
 		else
 		{
-			sortArr[i] = array[r_half];
-			r_half++;
+			arr_copy[i] = array[right_h];
+			right_h++;
 		}
 	}
-	prints(sortArr, "Done", l, r);
-	for (i = l; i < r; i++)
-		array[i] = sortArr[i];
+	output(arr_copy, "Done", left, right);
+
+	for (i = left; i < right; i++)
+		array[i] = arr_copy[i];
 }
 /**
- * merge_sort - sorts mergly
- * @array: array sort
- * @size: size of array
+ * merge_sort - sorts an array of integers in ascending order
+ * using the Merge sort algorithm
+ * @array: input array
+ * @size: array size
  */
 void merge_sort(int *array, size_t size)
 {
-	int *sortArr;
+	int *arr_copy;
 
-	if (!(array) || size < 2)
+	if (size < 2)
 		return;
-	sortArr = malloc(sizeof(int) * size);
-	if (!(sortArr))
+	arr_copy = malloc(sizeof(int) * size);
+	if (!arr_copy)
 		return;
-	rec_merge(array, sortArr, 0, size);
-	free(sortArr);
+
+	merge_recursive(array, arr_copy, 0, size);
+
+	free(arr_copy);
 }
